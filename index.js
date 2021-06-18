@@ -8,7 +8,9 @@ const inquirer = require('inquirer');
 //const Manager = require('./lib/Manager.js');
 
 
-
+employee = "",
+engineer = "",
+inter = ""
 //questions for manager/ intern/ employees and engineers!
 const managerPrompt = () => {
     return inquirer.prompt([{
@@ -61,15 +63,15 @@ const managerPrompt = () => {
 
 
 
-const menuPrompt = (teamData) => {
+const menuPrompt = (answer) => {
     console.log(`
     =================
     Add your Team!
     =================
     `);
-    //if (!teamData) {
-    //  teamData = [];
-    //}
+    if ( answer = answer.length ) {
+      answer.length = [];
+    }
     return inquirer.prompt([{
         type: 'list',
         name: 'menu',
@@ -89,7 +91,7 @@ const menuPrompt = (teamData) => {
 
 const engineerPrompt = () => {
 
-    inquirer.prompt([{
+    return inquirer.prompt([{
             type: 'input',
             name: 'name',
             message: 'What is your Engineers name? (required)',
@@ -104,17 +106,17 @@ const engineerPrompt = () => {
         },
         {
             type: 'input',
-            name: 'id',
+            name: 'engineerId',
             message: 'What is your Engineers work Id number?(required'
         },
         {
             type: 'input',
-            name: 'email',
+            name: 'engineerEmail',
             message: 'What is your Engineers Email address?'
         },
         {
             type: 'input',
-            name: 'github',
+            name: 'engineerGithub',
             message: 'What is your Engineers gitHub link?'
         }
     ])
@@ -137,18 +139,13 @@ const employeePrompt = () => {
         },
         {
             type: 'input',
-            name: 'id',
+            name: 'employeeId',
             message: 'What is your employees work Id number?'
         },
         {
             type: 'input',
-            name: 'email',
+            name: 'employeeEmail',
             message: 'What is your employees email address?'
-        },
-        {
-            type: 'input',
-            name: 'school',
-            message: 'What is your employees school?'
         },
     ])
 }
@@ -168,17 +165,17 @@ const internPrompt = () => {
         },
         {
             type: 'input',
-            name: 'id',
+            name: 'internId',
             message: 'What is your interns work Id number?'
         },
         {
             type: 'input',
-            name: 'email',
+            name: 'internEmail',
             message: 'What is your interns Email address?'
         },
         {
             type: 'input',
-            name: 'school',
+            name: 'InternSchool',
             message: 'What is your interns current school?'
         }
     ])
@@ -195,15 +192,17 @@ const finishedPrompt = () => {
 
 managerPrompt()
     .then(menuPrompt)
+    //meed to break up to make a if statement i think?
     .then(answer => {
         if (answer === "Add-Employee", employeePrompt()) {
-            then(answer => {
-                let employee = new Employee(answer)
-                employeeInformation = employee
-                console.table(employee)
-            })
+            let employee = new Employee(answer)
+            employeeInfo = employee
+            console.table(employee)
         }
     })
+
+
+
     .then(menuPrompt)
     .then(answer => {
         if (answer === "Add-Intern", internPrompt()) {
@@ -212,7 +211,7 @@ managerPrompt()
                 internInformation = intern
                 console.table(intern)
             })
-        }
+        } 
     })
     .then(menuPrompt)
     .then(answer => {

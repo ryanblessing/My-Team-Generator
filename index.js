@@ -1,17 +1,12 @@
 const inquirer = require('inquirer');
-const fs = require('fs');
-const generateTemplate = require('./src/template.js');
-const employee = require('./lib/Employee.js');
-const engineer = require('./lib/Engineer.js');
-const intern = require('./lib/Intern.js');
-const manager = require('./lib/Manager.js');
+//const fs = require('fs');
+//const generateTemplate = require('./src/template.js');
+//const employee = require('./lib/Employee.js');
+//const engineer = require('./lib/Engineer.js');
+//const intern = require('./lib/Intern.js');
+//const Manager = require('./lib/Manager.js');
 
 
-
-let managerInformation = '';
-let internInformation = '';
-let engineerInformation = '';
-let employeeInformation = '';
 
 //questions for manager/ intern/ employees and engineers!
 const managerPrompt = () => {
@@ -29,28 +24,50 @@ const managerPrompt = () => {
             }
         },
         {
-            type: 'input',
+            type: 'list',
             name: 'id',
-            message: 'What is your Id number?'
-        }, {
+            message: 'What is your Id number?',
+            choices: ["1", "2", "3", "4", "5"],
+            validate: idInput => {
+                if (idInput) {
+                    return true;
+                } else {
+                    console.log('Please enter your work ID number')
+                    return false;
+                }
+            }
+        },
+        {
             type: 'input',
             name: 'email',
             message: 'What is your Email address?'
-        }, {
-            type: 'input',
+        },
+        {
+            type: 'list',
             name: 'officeNumber',
-            message: 'What is your office Number?'
+            choices: ["1", "2", "3", "4", "5", "6", ],
+            validate: officeNumberBlock => {
+                if (officeNumberBlock) {
+                    return true;
+                } else {
+                    console.log("Please select one of the following office numbers!")
+                    return false;
+                }
+            }
         }
     ])
 }
+
 
 const menuPrompt = () => {
     return inquirer.prompt([{
         type: 'list',
         name: 'menu',
         choices: ["Add-Engineer", "Add-Employee", "Add-Intern"]
+        
     }])
 }
+
 
 const engineerPrompt = () => {
     return inquirer.prompt([{
@@ -84,6 +101,7 @@ const engineerPrompt = () => {
     ])
 }
 
+
 const employeePrompt = () => {
     return inquirer.prompt([{
             type: 'input',
@@ -115,6 +133,8 @@ const employeePrompt = () => {
         },
     ])
 }
+
+
 
 const internPrompt = () => {
     return inquirer.prompt([{
@@ -149,37 +169,85 @@ const internPrompt = () => {
 }
 
 managerPrompt()
-
-    .then(info => {
-        const manager = new Manager(info)
-        managerInformation = manager
-        console.table(manager)
-        console.log(manager.name)
+    .then(menuPrompt)
+    .then(answer => {
+        if (answer.menu === "Add-Employee") {
+            employeePrompt()
+                .then(answer => {
+                    const employee = new Employee(answer)
+                    employeeInformation = employee
+                    console.table(employee)
+                })
+        }
     })
     .then(menuPrompt)
-    .then(info => {
-        if (info.menu === "Add-Employee") {
+    .then(answer => {
+        if (answer.menu === "Add-Engineer") {
+            engineerPrompt()
+                .then(answer => {
+                    const engineer = new Engineer(answer)
+                    engineerInformation = engineer
+                    console.table(engineer)
+                })
+        }
+    })
+    .then(menuPrompt)
+    .then(answer => {
+        if (answer.menu === "Add-Intern") {
+            internPrompt()
+                .then(answer => {
+                    const intern = new Intern(answer)
+                    internInformation = intern
+                    console.table(intern)
+                })
+                .then(menuPrompt)
+
+        }
+    })
+// create a finish team section?
+
+
+
+
+
+
+
+
+
+
+
+/*
+    .then(answer => {
+        let manager = new Manager(answer)
+        Managers = manager
+        console.table(manager)
+        console.log(manager.answer)
+    })
+    
+    .then(menuPrompt)
+    .then(answer => {
+        if (answer.menu === "Add-Employee") {
             employeePrompt()
-                .then(info => {
-                    const employee = new Employee(info)
+                .then(answer => {
+                    const employee = new Employee(answer)
                     employeeInformation = employee
                     console.table(employee)
                 })
                 .then(menuPrompt)
-                .then(info => {
-                    if (info.menu === "Add-Engineer") {
+                .then(answer => {
+                    if (answer.menu === "Add-Engineer") {
                         engineerPrompt()
-                            .then(info => {
-                                const engineer = new Engineer(info)
+                            .then(answer => {
+                                const engineer = new Engineer(answer)
                                 engineerInformation = engineer
                                 console.table(engineer)
                             })
                             .then(menuPrompt)
-                            .then(info => {
-                                if (info.menu === "Add-Intern") {
+                            .then(answer => {
+                                if (answer.menu === "Add-Intern") {
                                     internPrompt()
-                                        .then(info => {
-                                            const intern = new Intern(info)
+                                        .then(answer => {
+                                            const intern = new Intern(answer)
                                             internInformation = intern
                                             console.table(intern)
                                         })
@@ -191,4 +259,4 @@ managerPrompt()
                     }
                 })
         }
-    })
+    })*/

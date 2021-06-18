@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+
 //const fs = require('fs');
 //const generateTemplate = require('./src/template.js');
 //const employee = require('./lib/Employee.js');
@@ -56,21 +57,39 @@ const managerPrompt = () => {
             }
         }
     ])
-}
+};
 
 
-const menuPrompt = () => {
+
+const menuPrompt = (teamData) => {
+    console.log(`
+    =================
+    Add your Team!
+    =================
+    `);
+    //if (!teamData) {
+    //  teamData = [];
+    //}
     return inquirer.prompt([{
         type: 'list',
         name: 'menu',
-        choices: ["Add-Engineer", "Add-Employee", "Add-Intern"]
-        
+        message: 'Please choose from the following options',
+        choices: ["Add-Engineer", "Add-Employee", "Add-Intern", "Finished"],
+        validate: answer => {
+            if (answer) {
+                return true;
+            } else {
+                console.log("please choose one of the following options");
+                return false;
+            }
+        }
     }])
 }
 
 
 const engineerPrompt = () => {
-    return inquirer.prompt([{
+
+    inquirer.prompt([{
             type: 'input',
             name: 'name',
             message: 'What is your Engineers name? (required)',
@@ -133,9 +152,6 @@ const employeePrompt = () => {
         },
     ])
 }
-
-
-
 const internPrompt = () => {
     return inquirer.prompt([{
             type: 'input',
@@ -168,95 +184,82 @@ const internPrompt = () => {
     ])
 }
 
+const finishedPrompt = () => {
+    return inquirer.prompt([{
+        type: 'confirm',
+        name: 'addEmployee',
+        message: 'Are you sure you are finished?',
+        default: true
+    }])
+}
+
 managerPrompt()
     .then(menuPrompt)
     .then(answer => {
-        if (answer.menu === "Add-Employee") {
-            employeePrompt()
-                .then(answer => {
-                    const employee = new Employee(answer)
-                    employeeInformation = employee
-                    console.table(employee)
-                })
+        if (answer === "Add-Employee", employeePrompt()) {
+            then(answer => {
+                let employee = new Employee(answer)
+                employeeInformation = employee
+                console.table(employee)
+            })
         }
     })
     .then(menuPrompt)
     .then(answer => {
-        if (answer.menu === "Add-Engineer") {
-            engineerPrompt()
-                .then(answer => {
-                    const engineer = new Engineer(answer)
-                    engineerInformation = engineer
-                    console.table(engineer)
-                })
+        if (answer === "Add-Intern", internPrompt()) {
+            then(answer => {
+                let intern = new Intern(answer)
+                internInformation = intern
+                console.table(intern)
+            })
         }
     })
     .then(menuPrompt)
     .then(answer => {
-        if (answer.menu === "Add-Intern") {
-            internPrompt()
-                .then(answer => {
-                    const intern = new Intern(answer)
-                    internInformation = intern
-                    console.table(intern)
-                })
-                .then(menuPrompt)
-
+        if (answer === "Add-Engineer", engineerPrompt()) {
+            then(answer => {
+                let engineer = new Engineer(answer)
+                engineerInformation = engineer
+                console.table(engineer)
+            })
         }
     })
-// create a finish team section?
-
-
-
-
-
-
-
-
-
-
-
-/*
-    .then(answer => {
-        let manager = new Manager(answer)
-        Managers = manager
-        console.table(manager)
-        console.log(manager.answer)
-    })
-    
     .then(menuPrompt)
-    .then(answer => {
-        if (answer.menu === "Add-Employee") {
-            employeePrompt()
-                .then(answer => {
-                    const employee = new Employee(answer)
-                    employeeInformation = employee
-                    console.table(employee)
-                })
-                .then(menuPrompt)
-                .then(answer => {
-                    if (answer.menu === "Add-Engineer") {
-                        engineerPrompt()
-                            .then(answer => {
-                                const engineer = new Engineer(answer)
-                                engineerInformation = engineer
-                                console.table(engineer)
-                            })
-                            .then(menuPrompt)
-                            .then(answer => {
-                                if (answer.menu === "Add-Intern") {
-                                    internPrompt()
-                                        .then(answer => {
-                                            const intern = new Intern(answer)
-                                            internInformation = intern
-                                            console.table(intern)
-                                        })
-                                        .then(menuPrompt)
+    .catch(err => {
+        console.log(err);
+    });
 
-                                }
-                            })
-                        // create a finish team section?
-                    }
-                })
-        }
-    })*/
+
+
+
+
+
+
+
+/*if (teamData === "Add-Engineer") {
+    engineerPrompt()
+    return true;
+} else if (
+    teamData === "Add-Employee") {
+    employeePrompt()
+    return true;
+} else if (
+    teamData === "Add-Intern") {
+    internPrompt()
+    return true;
+} else if (
+    teamData === "Finished"
+) {
+    finishedPrompt()
+    return true;
+} else {
+    return false;
+}
+*/
+
+
+
+
+
+
+// create a finish team section?*/

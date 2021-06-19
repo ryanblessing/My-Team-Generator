@@ -1,16 +1,14 @@
 const inquirer = require('inquirer');
 
-//const fs = require('fs');
-//const generateTemplate = require('./src/template.js');
-//const employee = require('./lib/Employee.js');
-//const engineer = require('./lib/Engineer.js');
-//const intern = require('./lib/Intern.js');
-//const Manager = require('./lib/Manager.js');
+const fs = require('fs');
+const generateTemplate = require('./src/template.js');
+const employee = require('./lib/Employee.js');
+const engineer = require('./lib/Engineer.js');
+const intern = require('./lib/Intern.js');
+const manager = require('./lib/Manager.js');
 
 
-employee = "",
-engineer = "",
-inter = ""
+
 //questions for manager/ intern/ employees and engineers!
 const managerPrompt = () => {
     return inquirer.prompt([{
@@ -69,8 +67,8 @@ const menuPrompt = (answer) => {
     Add your Team!
     =================
     `);
-    if ( answer = answer.length ) {
-      answer.length = [];
+    if (answer = answer.length) {
+        answer.length = [];
     }
     return inquirer.prompt([{
         type: 'list',
@@ -90,7 +88,6 @@ const menuPrompt = (answer) => {
 
 
 const engineerPrompt = () => {
-
     return inquirer.prompt([{
             type: 'input',
             name: 'name',
@@ -107,7 +104,7 @@ const engineerPrompt = () => {
         {
             type: 'input',
             name: 'engineerId',
-            message: 'What is your Engineers work Id number?(required'
+            message: 'What is your Engineers work Id number?(required)'
         },
         {
             type: 'input',
@@ -190,43 +187,104 @@ const finishedPrompt = () => {
     }])
 }
 
+
+
 managerPrompt()
-    .then(menuPrompt)
-    //meed to break up to make a if statement i think?
     .then(answer => {
-        if (answer === "Add-Employee", employeePrompt()) {
-            let employee = new Employee(answer)
-            employeeInfo = employee
-            console.table(employee)
-        }
+        let manager = new Manager(answer)
+       // managerInfo = manager
+        console.log(manager)
+        console.table(manager)
     })
-
-
 
     .then(menuPrompt)
     .then(answer => {
-        if (answer === "Add-Intern", internPrompt()) {
-            then(answer => {
-                let intern = new Intern(answer)
-                internInformation = intern
-                console.table(intern)
-            })
-        } 
-    })
-    .then(menuPrompt)
-    .then(answer => {
-        if (answer === "Add-Engineer", engineerPrompt()) {
-            then(answer => {
-                let engineer = new Engineer(answer)
-                engineerInformation = engineer
-                console.table(engineer)
-            })
-        }
-    })
-    .then(menuPrompt)
-    .catch(err => {
-        console.log(err);
-    });
+            if (answer.menuPrompt === "Add-Engineer"); {
+                engineerPrompt()
+                    .then(answer => {
+                        let engineer = new Engineer(answer)
+                        engineerInfo = engineer
+                        console.log(engineer)
+                    })
+                    .then(menuPrompt)
+                    .then(answer => {
+                        if (answer.menuPrompt === "Add-Employee"); {
+                            employeePrompt()
+                                .then(answer => {
+                                    let employee = new Employee(answer)
+                                    employeeInfo = employee
+                                    console.log(employee)
+                                })
+                                .then(menuPrompt)
+                                .then(answer => {
+                                    if (answer.menuPrompt === "Add-Intern"); {
+                                        internPrompt()
+                                            .then(answer => {
+                                                let intern = new intern(answer)
+                                                internInfo = intern
+                                                console.log(intern)
+                                            })
+                                            .then(menuPrompt)
+                                            .then(answer => {
+                                                if (answer.menuPrompt === "Finished"); {
+                                                    finishedPrompt()
+                                                    if (answer.menuPrompt) {
+                                                        generateTemplate(managerInfo, engineerInfo, employeeInfo, internInfo)
+                                                        fs.watchFile('index.html', generateTemplate(managerInfo, engineerInfo, employeeInfo, internInfo), err => {
+                                                            if (err) throw err;
+                                                        })
+                                                    }
+                                                }
+                                            })
+                                    }
+                                })
+                            }}
+                    )}
+                    })
+                    .catch(err => {
+                        console.log(err);
+                      });
+
+
+
+
+
+
+                /*
+                    .then(menuPrompt)
+                    //meed to break up to make a if statement i think?
+                    .then(answer => {
+                        if (answer === "Add-Employee", employeePrompt()) {
+                            let employee = new Employee(answer)
+                            employeeInfo = employee
+                            console.table(employee)
+                        } else {}
+                    })
+
+                    .then(menuPrompt)
+                    .then(answer => {
+                        if (answer === "Add-Intern", internPrompt()) {
+                            then(answer => {
+                                let intern = new Intern(answer)
+                                internInfo = intern
+                                console.table(intern)
+                            })
+                        } 
+                    })
+                    .then(menuPrompt)
+                    .then(answer => {
+                        if (answer === "Add-Engineer", engineerPrompt()) {
+                            then(answer => {
+                                let engineer = new Engineer(answer)
+                                engineerInfo = engineer
+                                console.table(engineer)
+                            })
+                        }
+                    })
+                    .then(menuPrompt)
+                    .catch(err => {
+                        console.log(err);
+                    });
 
 
 
@@ -235,30 +293,30 @@ managerPrompt()
 
 
 
-/*if (teamData === "Add-Engineer") {
-    engineerPrompt()
-    return true;
-} else if (
-    teamData === "Add-Employee") {
-    employeePrompt()
-    return true;
-} else if (
-    teamData === "Add-Intern") {
-    internPrompt()
-    return true;
-} else if (
-    teamData === "Finished"
-) {
-    finishedPrompt()
-    return true;
-} else {
-    return false;
-}
-*/
+                /*if (teamData === "Add-Engineer") {
+                    engineerPrompt()
+                    return true;
+                } else if (
+                    teamData === "Add-Employee") {
+                    employeePrompt()
+                    return true;
+                } else if (
+                    teamData === "Add-Intern") {
+                    internPrompt()
+                    return true;
+                } else if (
+                    teamData === "Finished"
+                ) {
+                    finishedPrompt()
+                    return true;
+                } else {
+                    return false;
+                }
+                */
 
 
 
 
 
 
-// create a finish team section?*/
+                // create a finish team section?*/

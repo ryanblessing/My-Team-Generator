@@ -1,11 +1,15 @@
-const { test, expect } = require("@jest/globals");
-const Manager = require("../lib/Manager.js");
+const Employee = require("../lib/Employee");
+const Manager = require("../lib/Manager.");
 
 test('Create a manager object', () => {
-    const manager = new Manager('');
+    const manager = new Manager();
+    
+    expect(typeof(manager)).toBe('object')
 
-    expect(manager.name).toBe('');
-    expect(manager.id).toBeGreaterThanOrEqual(0);
-    expect(manager.email).toBe("manager1@yahoo.com");
-    expect(manager.officeNumber).toBeGreaterThanOrEqual(0);
+});
+
+test('To get managers office number', () => {
+    const manager = new Manager(officeNumber)
+
+    expect(manager.officeNumber).toBe(1)
 })

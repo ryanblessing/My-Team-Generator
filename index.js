@@ -236,8 +236,8 @@ managerPrompt()
                                                 if (answer.menuPrompt === "Finished"); {
                                                     finishedPrompt()
                                                     if (answer.menuPrompt) {
-                                                        generateTemplate(managerInfo, engineerInfo, employeeInfo, internInfo)
-                                                        fs.watchFile('index.html', generateTemplate(managerInfo, engineerInfo, employeeInfo, internInfo), err => {
+                                                        generateTemplate(data)
+                                                        fs.watchFile('index.html', generateTemplate(data), err => {
                                                             if (err) throw err;
                                                         })
                                                     }

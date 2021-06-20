@@ -6,8 +6,14 @@ const Employee = require('./lib/Employee.js');
 const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
+//const Verifier = require("email-verifier");
 
-
+/*let verifier = new Verifier("at_DYUf5lcZvGyBFyXeDiJHabF6uSpPi");
+verifier.verify("r@rdegges.com", (err, data) => {
+    if (err) throw err;
+    console.log(data);
+});
+*/
 
 //questions for manager/ intern/ employees and engineers!
 const managerPrompt = () => {

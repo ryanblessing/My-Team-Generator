@@ -198,7 +198,7 @@ const finishedPrompt = () => {
 managerPrompt()
     .then(answer => {
         let manager = new Manager(answer)
-       // managerInfo = manager
+        managerInfo = manager
         console.log(manager)
         console.table(manager)
     })
@@ -211,6 +211,7 @@ managerPrompt()
                         let engineer = new Engineer(answer)
                         engineerInfo = engineer
                         console.log(engineer)
+                        console.table(engineer)
                     })
                     .then(menuPrompt)
                     .then(answer => {
@@ -226,7 +227,7 @@ managerPrompt()
                                     if (answer.menuPrompt === "Add-Intern"); {
                                         internPrompt()
                                             .then(answer => {
-                                                let intern = new intern(answer)
+                                                let intern = new Intern(answer)
                                                 internInfo = intern
                                                 console.log(intern)
                                             })

@@ -1,11 +1,12 @@
 const inquirer = require('inquirer');
 
 const fs = require('fs');
-const generateTemplate = require('./src/template.js');
+const generateHtml = require('./src/template.js');
 const Employee = require('./lib/Employee.js');
 const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
+
 //const Verifier = require("email-verifier");
 
 /*let verifier = new Verifier("at_DYUf5lcZvGyBFyXeDiJHabF6uSpPi");
@@ -19,7 +20,7 @@ verifier.verify("r@rdegges.com", (err, data) => {
 const managerPrompt = () => {
     return inquirer.prompt([{
             type: 'input',
-            name: 'name',
+            name: 'managerName',
             message: 'Enter team manager name? (Required)',
             validate: managerName => {
                 if (managerName) {
@@ -32,7 +33,7 @@ const managerPrompt = () => {
         },
         {
             type: 'list',
-            name: 'id',
+            name: 'managerId',
             message: 'What is your Id number?',
             choices: ["1", "2", "3", "4", "5"],
             validate: idInput => {
@@ -46,7 +47,7 @@ const managerPrompt = () => {
         },
         {
             type: 'input',
-            name: 'email',
+            name: 'managerEmail',
             message: 'What is your Email address?'
         },
         {
@@ -67,15 +68,16 @@ const managerPrompt = () => {
 
 
 
-const menuPrompt = (answer) => {
+const menuPrompt = () => {
     console.log(`
     =================
     Add your Team!
     =================
     `);
-    if (answer = answer.length) {
-        answer.length = [];
+    if (!menuPrompt.answer) {
+        menuPrompt.answer = [];
     }
+
     return inquirer.prompt([{
         type: 'list',
         name: 'menu',
@@ -93,10 +95,11 @@ const menuPrompt = (answer) => {
 }
 
 
+
 const engineerPrompt = () => {
     return inquirer.prompt([{
             type: 'input',
-            name: 'name',
+            name: 'engineerName',
             message: 'What is your Engineers name? (required)',
             validate: engineerName => {
                 if (engineerName) {
@@ -110,7 +113,16 @@ const engineerPrompt = () => {
         {
             type: 'input',
             name: 'engineerId',
-            message: 'What is your Engineers work Id number?(required)'
+            message: 'What is your Engineers work Id number?(required)',
+            choices: ["1", "2", "3", "4", "5"],
+            validate: engineerId => {
+                if (engineerId) {
+                    return true;
+                } else {
+                    console.log('Please enter your work ID number')
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
@@ -120,16 +132,22 @@ const engineerPrompt = () => {
         {
             type: 'input',
             name: 'engineerGithub',
-            message: 'What is your Engineers gitHub link?'
+            message: 'What is your Engineers gitHub link?',
+            validate: EngineerGitHub => {
+                if (EngineerGitHub) {
+                    return true;
+                } else {
+                    console.log("Please enter a valid Github Account")
+                    return false;
+                }
+            }
         }
     ])
 }
-
-
 const employeePrompt = () => {
     return inquirer.prompt([{
             type: 'input',
-            name: 'name',
+            name: 'employeeName',
             message: 'What is your employees name? (Required)',
             validate: employeeName => {
                 if (employeeName) {
@@ -143,7 +161,16 @@ const employeePrompt = () => {
         {
             type: 'input',
             name: 'employeeId',
-            message: 'What is your employees work Id number?'
+            message: 'What is your employees work Id number?',
+            choices: ["1", "2", "3", "4", "5"],
+            validate: employeeId => {
+                if (employeeId) {
+                    return true;
+                } else {
+                    console.log('Please enter your work ID number')
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
@@ -155,7 +182,7 @@ const employeePrompt = () => {
 const internPrompt = () => {
     return inquirer.prompt([{
             type: 'input',
-            name: 'name',
+            name: 'internName',
             message: 'What is your interns name? (Required)',
             validate: internName => {
                 if (internName) {
@@ -169,7 +196,16 @@ const internPrompt = () => {
         {
             type: 'input',
             name: 'internId',
-            message: 'What is your interns work Id number?'
+            message: 'What is your interns work Id number?',
+            choices: ["1", "2", "3", "4", "5"],
+            validate: internId => {
+                if (internId) {
+                    return true;
+                } else {
+                    console.log('Please enter your work ID number')
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
@@ -194,61 +230,94 @@ const finishedPrompt = () => {
 }
 
 
-
 managerPrompt()
     .then(answer => {
         let manager = new Manager(answer)
         managerInfo = manager
         console.log(manager)
-        console.table(manager)
     })
 
     .then(menuPrompt)
     .then(answer => {
-            if (answer.menuPrompt === "Add-Engineer"); {
-                engineerPrompt()
-                    .then(answer => {
-                        let engineer = new Engineer(answer)
-                        engineerInfo = engineer
-                        console.log(engineer)
-                        console.table(engineer)
-                    })
-                    .then(menuPrompt)
-                    .then(answer => {
-                        if (answer.menuPrompt === "Add-Employee"); {
-                            employeePrompt()
-                                .then(answer => {
-                                    let employee = new Employee(answer)
-                                    employeeInfo = employee
-                                    console.log(employee)
-                                })
-                                .then(menuPrompt)
-                                .then(answer => {
-                                    if (answer.menuPrompt === "Add-Intern"); {
-                                        internPrompt()
-                                            .then(answer => {
-                                                let intern = new Intern(answer)
-                                                internInfo = intern
-                                                console.log(intern)
-                                            })
-                                            .then(menuPrompt)
-                                            .then(answer => {
-                                                if (answer.menuPrompt === "Finished"); {
-                                                    finishedPrompt()
-                                                    if (answer.menuPrompt) {
-                                                        generateTemplate(data)
-                                                        fs.watchFile('index.html', generateTemplate(data), err => {
-                                                            if (err) throw err;
-                                                        })
-                                                    }
-                                                }
-                                            })
-                                    }
-                                })
-                            }}
-                    )}
-                    })
-                    .catch(err => {
-                        console.log(err);
-                      });
+        if (answer.menuPrompt === "Add-Engineer"); {
+            engineerPrompt()
+                .then(answer => {
+                    let engineer = new Engineer(answer)
+                    engineerInfo = engineer
+                    console.log(engineer)
+                })
+                .then(menuPrompt)
+                .then(answer => {
+                    if (answer.menuPrompt === "Add-Employee"); {
+                        employeePrompt()
+                            .then(answer => {
+                                let employee = new Employee(answer)
+                                employeeInfo = employee
+                                console.log(employee)
+                            })
+                            .then(menuPrompt)
+                            .then(answer => {
+                                if (answer.menuPrompt === "Add-Intern"); {
+                                    internPrompt()
+                                        .then(answer => {
+                                            let intern = new Intern(answer)
+                                            internInfo = intern
+                                            console.log(intern)
+                                        })
+                                        .then(menuPrompt)
+                                        .then(answer => {
+                                            if (answer.menuPrompt === "Finished"); {
+                                                finishedPrompt()
+                                                    .then(answer => {
+                                                        if (answer) {
+                                                            writeFile();
+                                                            return true;
+                                                        } else {
+                                                            menuPrompt();
+                                                            return false;
+                                                        }
+                                                    })
+                                            }
+                                        })
+                                }
+                            })
+                    }
+                })
+        }
+    })
+    .catch(err => {
+        console.log(err);
+    });
 
+const writeFile = answer => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile('./dist/index.html', answer, err => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve({
+                ok: true,
+                message: 'file created!'
+            });
+        });
+    });
+};
+
+const copyFile = () => {
+    return new Promise((resolve, reject) => {
+        fs.copyFile('./src/style.css', './dist/style.css', err => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve({
+                ok: true,
+                message: 'Files copied!'
+            });
+        });
+    });
+};
+
+
+module.exports = {writeFile, copyFile };

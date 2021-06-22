@@ -74,4 +74,4 @@ const generateHtml = (answer) => {
 
     `;
 };
-module.exports = generateTemplate
+module.exports = generateHtml

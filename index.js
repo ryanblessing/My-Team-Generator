@@ -269,7 +269,7 @@ managerPrompt()
                                             if (answer.menuPrompt === "Finished"); {
                                                 finishedPrompt()
                                                     .then(answer => {
-                                                        if (answer) {
+                                                        if (answer || yes) {
                                                             writeFile();
                                                             return true;
                                                         } else {

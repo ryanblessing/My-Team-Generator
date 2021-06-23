@@ -229,6 +229,21 @@ const finishedPrompt = () => {
     }])
 }
 
+/*managerPrompt();
+{
+    if(answer === "Add-Engineer"){
+        return engineerPrompt();
+    } if(answer === "Add-Intern") {
+        return internPrompt();
+    } if(answer === "Add-Employee") {
+        return employeePrompt();
+    } if(answer === "Finished") {
+        return finishedPrompt();
+    } else {
+        return menuPrompt();
+    }
+}
+*/
 
 managerPrompt()
     .then(answer => {
@@ -269,7 +284,7 @@ managerPrompt()
                                             if (answer.menuPrompt === "Finished"); {
                                                 finishedPrompt()
                                                     .then(answer => {
-                                                        if (answer || yes) {
+                                                        if (answer) {
                                                             writeFile();
                                                             return true;
                                                         } else {
@@ -289,7 +304,7 @@ managerPrompt()
         console.log(err);
     });
 
-const writeFile = answer => {
+const writeFile = () => {
     return new Promise((resolve, reject) => {
         fs.writeFile('./dist/index.html', answer, err => {
             if (err) {
@@ -320,4 +335,13 @@ const copyFile = () => {
 };
 
 
-module.exports = {writeFile, copyFile };
+
+
+    
+    
+
+
+module.exports = {
+    writeFile,
+    copyFile
+};

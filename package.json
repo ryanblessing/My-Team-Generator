@@ -1,0 +1,29 @@
+{
+  "name": "my-team-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanblessing/My-Team-Generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryanblessing/My-Team-Generator/issues"
+  },
+  "homepage": "https://github.com/ryanblessing/My-Team-Generator#readme",
+  "dependencies": {
+    "email-verifier": "^0.4.1",
+    "inquirer": "^8.1.1"
+  },
+  "devDependencies": {
+    "jest": "^27.0.4"
+  }
+}

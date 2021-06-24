@@ -6,7 +6,7 @@ const Employee = require('./lib/Employee.js');
 const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
-
+const employeeArray = [];
 //const Verifier = require("email-verifier");
 
 /*let verifier = new Verifier("at_DYUf5lcZvGyBFyXeDiJHabF6uSpPi");
@@ -18,52 +18,68 @@ verifier.verify("r@rdegges.com", (err, data) => {
 
 //questions for manager/ intern/ employees and engineers!
 const managerPrompt = () => {
-    return inquirer.prompt([{
-            type: 'input',
-            name: 'managerName',
-            message: 'Enter team manager name? (Required)',
-            validate: managerName => {
-                if (managerName) {
-                    return true;
-                } else {
-                    console.log('Your name must be entered at this time!');
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'list',
-            name: 'managerId',
-            message: 'What is your Id number?',
-            choices: ["1", "2", "3", "4", "5"],
-            validate: idInput => {
-                if (idInput) {
-                    return true;
-                } else {
-                    console.log('Please enter your work ID number')
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'input',
-            name: 'managerEmail',
-            message: 'What is your Email address?'
-        },
-        {
-            type: 'list',
-            name: 'officeNumber',
-            choices: ["1", "2", "3", "4", "5", "6", ],
-            validate: officeNumberBlock => {
-                if (officeNumberBlock) {
-                    return true;
-                } else {
-                    console.log("Please select one of the following office numbers!")
-                    return false;
-                }
-            }
-        }
-    ])
+    return inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "managerName",
+                message: "Enter team manager name? (Required)",
+                validate: (managerName) => {
+                    if (managerName) {
+                        return true;
+                    } else {
+                        console.log("Your name must be entered at this time!");
+                        return false;
+                    }
+                },
+            },
+            {
+                type: "list",
+                name: "managerId",
+                message: "What is your Id number?",
+                choices: ["1", "2", "3", "4", "5"],
+                validate: (idInput) => {
+                    if (idInput) {
+                        return true;
+                    } else {
+                        console.log("Please enter your work ID number");
+                        return false;
+                    }
+                },
+            },
+            {
+                type: "input",
+                name: "managerEmail",
+                message: "What is your Email address?",
+            },
+            {
+                type: "list",
+                name: "officeNumber",
+                choices: ["1", "2", "3", "4", "5", "6"],
+                validate: (officeNumberBlock) => {
+                    if (officeNumberBlock) {
+                        return true;
+                    } else {
+                        console.log(
+                            "Please select one of the following office numbers!"
+                        );
+                        return false;
+                    }
+                },
+            },
+        ])
+        .then((answer) => {
+            const { managerName, managerId, manageEmail, officeNumber } =
+                answer;
+            const managerObj = new Manager(
+                managerName,
+                managerId,
+                manageEmail,
+                officeNumber
+            );
+            employeeArray.push(managerObj);
+            menuPrompt();
+        });
 };
 
 
@@ -77,22 +93,47 @@ const menuPrompt = () => {
     if (!menuPrompt.answer) {
         menuPrompt.answer = [];
     }
-
-    return inquirer.prompt([{
-        type: 'list',
-        name: 'menu',
-        message: 'Please choose from the following options',
-        choices: ["Add-Engineer", "Add-Employee", "Add-Intern", "Finished"],
-        validate: answer => {
-            if (answer) {
-                return true;
-            } else {
-                console.log("please choose one of the following options");
-                return false;
+    return inquirer
+        .prompt([
+            {
+                type: "list",
+                name: "menu",
+                message: "Please choose from the following options",
+                choices: [
+                    "Add-Engineer",
+                    "Add-Employee",
+                    "Add-Intern",
+                    "Finished",
+                ],
+                validate: (answer) => {
+                    if (answer) {
+                        return true;
+                    } else {
+                        console.log(
+                            "please choose one of the following options"
+                        );
+                        return false;
+                    }
+                },
+            },
+        ])
+        .then((answer) => {
+            switch (answer.menu) {
+                case "Add-Engineer":
+                    engineerPrompt();
+                    break;
+                case "Add-Employee":
+                    employeePrompt();
+                    break;
+                case "Add-Intern":
+                    internPrompt();
+                    break;
+                case "Finished":
+                    finishedPrompt();
+                    break;
             }
-        }
-    }])
-}
+        });
+};
 
 
 
@@ -143,7 +184,19 @@ const engineerPrompt = () => {
             }
         }
     ])
-}
+    .then((answer) => {
+        const { engineerName, engineerId, engineerEmail, engineerGitHub } =
+        answer;
+        const engineerObj = new Engineer(
+            engineerName,
+            engineerId,
+            engineerEmail,
+            engineerGitHub
+        );
+        employeeArray.push(engineerObj);
+        menuPrompt();
+    });
+};
 const employeePrompt = () => {
     return inquirer.prompt([{
             type: 'input',
@@ -178,7 +231,18 @@ const employeePrompt = () => {
             message: 'What is your employees email address?'
         },
     ])
-}
+    .then((answer) => {
+        const { employeeName, employeeId, employeeEmail } =
+        answer
+        const employeeObj = new Employee(
+            employeeName,
+            employeeId,
+            employeeEmail
+        );
+        employeeArray.push(employeeObj);
+        menuPrompt();
+    });
+};
 const internPrompt = () => {
     return inquirer.prompt([{
             type: 'input',
@@ -217,7 +281,19 @@ const internPrompt = () => {
             name: 'InternSchool',
             message: 'What is your interns current school?'
         }
-    ])
+    ]) 
+    .then((answer) => {
+        const { internName, internId, internEmail, internSchool } =
+        answer;
+        const internObj = new Intern(
+            internName,
+            internId,
+            internEmail,
+            internSchool
+        );
+        employeeArray.push(internObj);
+        menuPrompt();
+    })
 }
 
 const finishedPrompt = () => {
@@ -229,8 +305,8 @@ const finishedPrompt = () => {
     }])
 }
 
-/*managerPrompt();
-{
+managerPrompt();
+/*{
     if(answer === "Add-Engineer"){
         return engineerPrompt();
     } if(answer === "Add-Intern") {
@@ -242,10 +318,10 @@ const finishedPrompt = () => {
     } else {
         return menuPrompt();
     }
-}
-*/
+}*/
 
-managerPrompt()
+
+/*managerPrompt()
     .then(answer => {
         let manager = new Manager(answer)
         managerInfo = manager
@@ -303,10 +379,11 @@ managerPrompt()
     .catch(err => {
         console.log(err);
     });
+    */
 
-const writeFile = () => {
+const writeFile = employeeArray => {
     return new Promise((resolve, reject) => {
-        fs.writeFile('./dist/index.html', answer, err => {
+        fs.writeFile('./dist/index.html', employeeArray, err => {
             if (err) {
                 reject(err);
                 return;

@@ -333,7 +333,7 @@ managerPrompt();
 
 function writeFile() {
     return new Promise((resolve, reject) => {
-        fs.writeFile('./dist.index.html', generateFile, err => {
+        fs.writeFile('./dist/index.html', generateFile, err => {
             if (err) {
                 reject(err);
                 return;

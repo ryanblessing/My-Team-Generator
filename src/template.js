@@ -1,15 +1,7 @@
 
-
-
-
-
-
-
-
-const generateManager = data => {
+const generateManager = () => {
   
-  return `
-  
+  return`
   <section>
     <div class="card" style="width: 18rem;">
       <ul class="list-group list-group-flush">
@@ -23,11 +15,10 @@ const generateManager = data => {
   `
 }
 
-const generateEngineer = data => {
+const generateEngineer = () => {
   
-  return `
-  
-  <section>
+  return`
+  <section class="row">
     <div class="card" style="width: 18rem;">
       <ul class="list-group list-group-flush">
         <li class="list-group-item">${data.engineerName}</li>
@@ -38,14 +29,11 @@ const generateEngineer = data => {
     </div>
   </section>
   `
-}
+};
 
-
-const generateEmployee = data => {
-  
-  return `
-  
-  <section>
+const generateEmployee = () => {
+  return`
+  <section class="row">
     <div class="card" style="width: 18rem;">
       <ul class="list-group list-group-flush">
         <li class="list-group-item">${data.employeeName}</li>
@@ -58,11 +46,10 @@ const generateEmployee = data => {
 }
 
 
-const generateIntern = data => {
+const generateIntern = () => {
   
-  return `
-  
-  <section>
+  return`
+  <section class ="row">
     <div class="card" style="width: 18rem;">
       <ul class="list-group list-group-flush">
         <li class="list-group-item">${data.internName}</li>
@@ -79,23 +66,23 @@ const generateIntern = data => {
 
 
 const generateHtml = () => {
-    return `
+    return`
     <!DOCTYPE html>
     <html lang="en">
   
     <head>
       <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">y
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>My-Team-Profile</title>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
       <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
         <header> 
             <div class="navbar-header"> 
-            <h1 class="">My Team</h1>
+            <h1>My Team</h1>
             </div>
         </header>
 
@@ -105,7 +92,9 @@ const generateHtml = () => {
             </section> 
             <section>
             ${generateEngineer}
+            <br>
             ${generateEmployee}
+            <br>
             ${generateIntern}
             </section>   
         </main>

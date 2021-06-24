@@ -1,15 +1,81 @@
-const employeeArray = () => {
-  if(!employeeArray) {
-    return '';
-  }
+
+
+
+
+
+
+
+
+const generateManager = data => {
+  
   return `
   
   <section>
-    
-  
-  
+    <div class="card" style="width: 18rem;">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">${data.managerName}</li>
+        <li class="list-group-item">${data.managerId}</li>
+        <li class="list-group-item">${data.managerEmail}</li>
+        <li class="list-group-item">${data.officeNumber}</li>
+      </ul>
+    </div>
+  </section>
   `
 }
+
+const generateEngineer = data => {
+  
+  return `
+  
+  <section>
+    <div class="card" style="width: 18rem;">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">${data.engineerName}</li>
+        <li class="list-group-item">${data.engineerId}</li>
+        <li class="list-group-item">${data.engineerEmail}</li>
+        <li class="list-group-item">${data.engineerGitHub}</li>
+      </ul>
+    </div>
+  </section>
+  `
+}
+
+
+const generateEmployee = data => {
+  
+  return `
+  
+  <section>
+    <div class="card" style="width: 18rem;">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">${data.employeeName}</li>
+        <li class="list-group-item">${data.employeeId}</li>
+        <li class="list-group-item">${data.employeeEmail}</li>
+      </ul>
+    </div>
+  </section>
+  `
+}
+
+
+const generateIntern = data => {
+  
+  return `
+  
+  <section>
+    <div class="card" style="width: 18rem;">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">${data.internName}</li>
+        <li class="list-group-item">${data.internId}</li>
+        <li class="list-group-item">${data.internEmail}</li>
+        <li class="list-group-item">${data.internSchool}</li>
+      </ul>
+    </div>
+  </section>
+  `
+}
+
+
 
 
 const generateHtml = () => {
@@ -28,22 +94,31 @@ const generateHtml = () => {
 
     <body>
         <header> 
-            <div class="container"> 
+            <div class="navbar-header"> 
             <h1 class="">My Team</h1>
             </div>
         </header>
 
         <main>
             <section>
-            
-            </section>    
+            ${generateManager}
+            </section> 
+            <section>
+            ${generateEngineer}
+            ${generateEmployee}
+            ${generateIntern}
+            </section>   
         </main>
     </body>
-
+    <footer>
+        <h3> created by Ryan Blessing
+        </h3>
+    </footer>
     </html>
     
 
 
     `;
 };
-module.exports = generateHtml
+module.exports = generateHtml(); 
+  

@@ -1,11 +1,13 @@
 const inquirer = require('inquirer');
-
-const fs = require('fs');
+const fs = require('fs'); 
 const generateFile = require('./src/template.js');
 const Employee = require('./lib/Employee.js');
 const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
+
+
+
 const employeeArray = [];
 //const Verifier = require("email-verifier");
 
@@ -69,16 +71,16 @@ function managerPrompt() {
         ])
         .then((answer) => {
             const {
-                name,
-                id,
-                email,
+                managerName,
+                managerId,
+                managerEmail,
                 officeNumber
             } =
             answer;
             const managerObj = new Manager(
-                name,
-                id,
-                email,
+                managerName,
+                managerId,
+                managerEmail,
                 officeNumber
             );
             employeeArray.push(managerObj);
@@ -188,17 +190,17 @@ function engineerPrompt()  {
         ])
         .then((answer) => {
             const {
-                name,
-                id,
-                email,
-                gitHub
+                engineerName,
+                engineerId,
+                engineerEmail,
+                engineerGitHub
             } =
             answer;
             const engineerObj = new Engineer(
-                name,
-                id,
-                email,
-                gitHub
+                engineerName,
+                engineerId,
+                engineerEmail,
+                engineerGitHub
             );
             employeeArray.push(engineerObj);
             menuPrompt();
@@ -240,15 +242,15 @@ function employeePrompt() {
         ])
         .then((answer) => {
             const {
-                name,
-                id,
-                email
+                employeeName,
+                employeeId,
+                employeeEmail
             } =
             answer
             const employeeObj = new Employee(
-                name,
-                id,
-                email
+                employeeName,
+                employeeId,
+                employeeEmail
             );
             employeeArray.push(employeeObj);
             menuPrompt();
@@ -295,56 +297,57 @@ function internPrompt()  {
         ])
         .then((answer) => {
             const {
-                name,
-                id,
-                email,
-                school
+                internName,
+                internId,
+                internEmail,
+                internSchool
             } =
             answer;
             const internObj = new Intern(
-                name,
-                id,
-                email,
-                school
+                internName,
+                internId,
+                internEmail,
+                internSchool
             );
             employeeArray.push(internObj);
             menuPrompt();
         })
 }
 
-  function finishedPrompt() {
-   return inquirer.prompt(
-        [{
-            type: 'confirm',
-            name: 'confirm',
-            default: true
-        }]
-    ).then(answer => {
-        if (answer.confirm === true) {
-            writeFile(employeeArray)
-        } else {
-            menuPrompt();
-        }
-    })
-}
-
-managerPrompt();
-
-
-function writeFile() {
-    return new Promise((resolve, reject) => {
-        fs.writeFile('index.html', generateFile, err => {
-            if (err) {
-                reject(err);
-                return;
-            }
-            resolve({
-                ok: true,
-                message: 'file created!'
-            });
-        });
-    });
-};
-module.exports = {
-    writeFile
-};
+function finishedPrompt() {
+    return inquirer.prompt(
+         [{
+             type: 'confirm',
+             name: 'confirm',
+             default: true
+         }]
+     ).then(answer => {
+         if (answer.confirm === true) {
+             writeFile(employeeArray)
+         } else {
+             menuPrompt();
+         }
+     })
+ }
+ 
+ managerPrompt();
+ 
+ 
+ function writeFile() {
+     return new Promise((resolve, reject) => {
+         fs.writeFile('index.html', generateFile, err => {
+             if (err) {
+                 reject(err);
+                 return;
+             }
+             resolve({
+                 ok: true,
+                 message: 'file created!'
+             });
+         });
+     });
+ };
+ module.exports = {
+     writeFile
+ };
+  

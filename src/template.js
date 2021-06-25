@@ -85,7 +85,8 @@ const generateHtml = employeeArray => {
             <section>
             ${employeeArray.map((employee) => {
               return employeeCard(employee)})
-            .join(engineerCard, internCard)}
+            .join(engineerCard)
+            .join(internCard)}
             </section> 
               
         </main>
@@ -100,4 +101,4 @@ const generateHtml = employeeArray => {
 
     `;
 };
-module.exports = generateHtml
+module.exports = generateHtml;

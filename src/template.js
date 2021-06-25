@@ -1,72 +1,63 @@
+const employeeCard = employee => {
 
-const generateManager = () => {
-  
-  return`
+  return `
   <section>
-    <div class="card" style="width: 18rem;">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">${data.managerName}</li>
-        <li class="list-group-item">${data.managerId}</li>
-        <li class="list-group-item">${data.managerEmail}</li>
-        <li class="list-group-item">${data.officeNumber}</li>
-      </ul>
+    <div class="card">
+    <h3 class="card-title">${employee.name}</h3>
+    <p>${employee.id}</p>
+    <p>${employee.email}</p>  
     </div>
-  </section>
-  `
+  </section>`
 }
 
-const generateEngineer = () => {
-  
-  return`
-  <section class="row">
-    <div class="card" style="width: 18rem;">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">${data.engineerName}</li>
-        <li class="list-group-item">${data.engineerId}</li>
-        <li class="list-group-item">${data.engineerEmail}</li>
-        <li class="list-group-item">${data.engineerGitHub}</li>
+const managerCard = manager => {
+  return `
+  <section>
+    <div class="card">
+    <h3 class="card-title">${manager.name}</h3>
+    <p>${manager.position}</p>
+      <ul>
+        <li>${manager.id}</li>
+        <li>${manager.email}</li>
+        <li>${employee.join(getOfficeNumber())}<//li> 
       </ul>
-    </div>
-  </section>
-  `
-};
-
-const generateEmployee = () => {
-  return`
-  <section class="row">
-    <div class="card" style="width: 18rem;">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">${data.employeeName}</li>
-        <li class="list-group-item">${data.employeeId}</li>
-        <li class="list-group-item">${data.employeeEmail}</li>
-      </ul>
-    </div>
-  </section>
-  `
+    </div> 
+  </section>`
 }
 
+const internCard = intern => {
+  return `
+        <section>
+          <div class="card">
+          <h3 class="card-title">${intern.name}</h3>
+          <p>${intern.position}</p>
+            <ul>
+              <li>${intern.id}</li>
+              <li>${intern.email}</li>
+              <li>${employee.join(getSchool())}<//li> 
+            </ul>
+          </div> 
+        </section>`
+}
 
-const generateIntern = () => {
-  
-  return`
-  <section class ="row">
-    <div class="card" style="width: 18rem;">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">${data.internName}</li>
-        <li class="list-group-item">${data.internId}</li>
-        <li class="list-group-item">${data.internEmail}</li>
-        <li class="list-group-item">${data.internSchool}</li>
-      </ul>
-    </div>
-  </section>
-  `
+const engineerCard = engineer => {
+  return `
+              <section>
+                <div class="card">
+                <h3 class="card-title">${engineer.name}</h3>
+                <p>${engineer.position}</p>
+                  <ul>
+                    <li>${engineer.id}</li>
+                    <li>${engineer.email}</li>
+                    <li>${employee.join(getGitHub())}<//li> 
+                  </ul>
+                </div> 
+              </section>`
 }
 
 
-
-
-const generateHtml = () => {
-    return`
+const generateHtml = employeeArray => {
+  return `
     <!DOCTYPE html>
     <html lang="en">
   
@@ -87,21 +78,21 @@ const generateHtml = () => {
         </header>
 
         <main>
+        <section>
+        ${managerCard}
+        </section>
+
             <section>
-            ${generateManager}
+            ${employeeArray.map((employee) => {
+              return employeeCard(employee)})
+            .join(engineerCard, internCard)}
             </section> 
-            <section>
-            ${generateEngineer}
-            <br>
-            ${generateEmployee}
-            <br>
-            ${generateIntern}
-            </section>   
+              
         </main>
-    </body>
+    </body>S
     <footer>
-        <h3> created by Ryan Blessing
-        </h3>
+        <h5> created by Ryan Blessing
+        </h5>
     </footer>
     </html>
     
@@ -109,5 +100,4 @@ const generateHtml = () => {
 
     `;
 };
-module.exports = generateHtml(); 
-  
+module.exports = generateHtml

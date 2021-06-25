@@ -69,16 +69,16 @@ function managerPrompt() {
         ])
         .then((answer) => {
             const {
-                managerName,
-                managerId,
-                manageEmail,
+                name,
+                id,
+                email,
                 officeNumber
             } =
             answer;
             const managerObj = new Manager(
-                managerName,
-                managerId,
-                manageEmail,
+                name,
+                id,
+                email,
                 officeNumber
             );
             employeeArray.push(managerObj);
@@ -188,17 +188,17 @@ function engineerPrompt()  {
         ])
         .then((answer) => {
             const {
-                engineerName,
-                engineerId,
-                engineerEmail,
-                engineerGitHub
+                name,
+                id,
+                email,
+                gitHub
             } =
             answer;
             const engineerObj = new Engineer(
-                engineerName,
-                engineerId,
-                engineerEmail,
-                engineerGitHub
+                name,
+                id,
+                email,
+                gitHub
             );
             employeeArray.push(engineerObj);
             menuPrompt();
@@ -240,15 +240,15 @@ function employeePrompt() {
         ])
         .then((answer) => {
             const {
-                employeeName,
-                employeeId,
-                employeeEmail
+                name,
+                id,
+                email
             } =
             answer
             const employeeObj = new Employee(
-                employeeName,
-                employeeId,
-                employeeEmail
+                name,
+                id,
+                email
             );
             employeeArray.push(employeeObj);
             menuPrompt();
@@ -295,17 +295,17 @@ function internPrompt()  {
         ])
         .then((answer) => {
             const {
-                internName,
-                internId,
-                internEmail,
-                internSchool
+                name,
+                id,
+                email,
+                school
             } =
             answer;
             const internObj = new Intern(
-                internName,
-                internId,
-                internEmail,
-                internSchool
+                name,
+                id,
+                email,
+                school
             );
             employeeArray.push(internObj);
             menuPrompt();
@@ -333,7 +333,7 @@ managerPrompt();
 
 function writeFile() {
     return new Promise((resolve, reject) => {
-        fs.writeFile('./dist/index.html', generateFile, err => {
+        fs.writeFile('index.html', generateFile, err => {
             if (err) {
                 reject(err);
                 return;

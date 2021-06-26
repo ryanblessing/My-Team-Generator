@@ -206,6 +206,7 @@ function engineerPrompt()  {
             menuPrompt();
         });
 };
+
 function employeePrompt() {
     return inquirer.prompt([{
                 type: 'input',
@@ -335,7 +336,7 @@ function finishedPrompt() {
  
  function writeFile() {
      return new Promise((resolve, reject) => {
-         fs.writeFile('index.html', generateFile(employeeArray), err => {
+         fs.writeFile('dist/index.html', generateFile(employeeArray), err => {
              if (err) {
                  reject(err);
                  return;

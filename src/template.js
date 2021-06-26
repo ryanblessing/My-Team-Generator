@@ -1,11 +1,15 @@
+
+
 const employeeCard = employee => {
 
   return `
   <section>
     <div class="card">
     <h3 class="card-title">${employee.name}</h3>
-    <p>${employee.id}</p>
-    <p>${employee.email}</p>  
+      <ul
+        <li>${employee.id}</li>
+      <li>${employee.email}</li>  
+      </ul>
     </div>
   </section>`
 }
@@ -19,7 +23,7 @@ const managerCard = manager => {
       <ul>
         <li>${manager.id}</li>
         <li>${manager.email}</li>
-        <li>${employee.join(getOfficeNumber())}<//li> 
+        <li>${employee.getOfficeNumber()}<//li> 
       </ul>
     </div> 
   </section>`
@@ -34,7 +38,7 @@ const internCard = intern => {
             <ul>
               <li>${intern.id}</li>
               <li>${intern.email}</li>
-              <li>${employee.join(getSchool())}<//li> 
+              <li>${employee.getSchool()}<//li> 
             </ul>
           </div> 
         </section>`
@@ -49,14 +53,16 @@ const engineerCard = engineer => {
                   <ul>
                     <li>${engineer.id}</li>
                     <li>${engineer.email}</li>
-                    <li>${employee.join(getGitHub())}<//li> 
+                    <li>${employee.getGitHub()}<//li> 
                   </ul>
                 </div> 
               </section>`
 }
 
 
-const generateHtml = employeeArray => {
+
+
+const generateHtml = team => {
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -78,24 +84,32 @@ const generateHtml = employeeArray => {
         </header>
 
         <main>
-        <section>
-        ${managerCard}
-        </section>
-
-            <section>
-            
-            </section> 
-              
+        
+        ${team.map((employee) => {
+          switch(employee.getRole()) {
+            case 'Manager':
+              return managerCard(employee)
+              break;
+            case 'Engineer':
+              return engineerCard(employee)
+              break;
+            case "Employee":
+              return employeeCard(employee)
+              break;
+            case "Intern":
+              return internCard(employee)
+              break;
+          }
+        }).join('')
+      }      
         </main>
-    </body>S
+    </body>
     <footer>
         <h5> created by Ryan Blessing
         </h5>
     </footer>
     </html>
-    
-
-
     `;
 };
-module.exports = generateHtml;
+
+module.exports = generateHtml

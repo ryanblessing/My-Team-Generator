@@ -335,7 +335,7 @@ function finishedPrompt() {
  
  function writeFile() {
      return new Promise((resolve, reject) => {
-         fs.writeFile('index.html', generateFile, err => {
+         fs.writeFile('index.html', generateFile(employeeArray), err => {
              if (err) {
                  reject(err);
                  return;

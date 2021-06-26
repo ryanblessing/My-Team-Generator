@@ -83,10 +83,7 @@ const generateHtml = employeeArray => {
         </section>
 
             <section>
-            ${employeeArray.map((employee) => {
-              return employeeCard(employee)})
-            .join(engineerCard)
-            .join(internCard)}
+            
             </section> 
               
         </main>

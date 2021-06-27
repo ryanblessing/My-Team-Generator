@@ -1,0 +1,22 @@
+* {
+margin:auto;
+
+}
+
+header h4 {
+text-align: center;
+}
+
+#Manager {
+margin-top: auto;
+}
+
+#employee-card{
+    align-items: stretch;
+    margin-bottom: auto;
+}
+
+
+footer {
+    text-align: center;
+}

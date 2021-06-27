@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs'); 
-const generateFile = require('./src/template.js');
+const generateHtml = require('./src/template.js');
 const Employee = require('./lib/Employee.js');
 const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
@@ -70,18 +70,11 @@ function managerPrompt() {
             },
         ])
         .then((answer) => {
-            const {
-                managerName,
-                managerId,
-                managerEmail,
-                officeNumber
-            } =
-            answer;
             const managerObj = new Manager(
-                managerName,
-                managerId,
-                managerEmail,
-                officeNumber
+                answer.managerName,
+                answer.managerId,
+                answer.managerEmail,
+                answer.officeNumber
             );
             employeeArray.push(managerObj);
             menuPrompt();
@@ -336,7 +329,7 @@ function finishedPrompt() {
  
  function writeFile() {
      return new Promise((resolve, reject) => {
-         fs.writeFile('dist/index.html', generateFile(employeeArray), err => {
+         fs.writeFile('dist/index.html', generateHtml(employeeArray), err => {
              if (err) {
                  reject(err);
                  return;

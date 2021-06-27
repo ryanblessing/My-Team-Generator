@@ -28,8 +28,8 @@ test('set Employee email address', () => {
 });
 
 test('To set the employees role in company', () => {
-    const position = "new employee"
-    const employee = new Employee("ryan", "1", "ryan@1", position)
+    const position = "Employee"
+    const employee = new Employee("ryan", "1", "ryan@1")
 
     expect(employee.getRole()).toBe(position)
 });

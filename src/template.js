@@ -3,66 +3,89 @@
 const employeeCard = employee => {
 
   return `
-  <section>
-    <div class="card">
-    <h3 class="card-title">${employee.name}</h3>
-      <ul
-        <li>${employee.id}</li>
-      <li>${employee.email}</li>  
-      </ul>
-    </div>
-  </section>`
+  <div class="d-sm-inline-flex" id="Employees">
+        <div class="col-sm-3" id="employee-card">
+          <div class="card border" style="width: 18rem;">
+            <div class="card-body">
+              <h3 class="card-title border-bottom">${employee.name}</h3>
+              <p>${employee.getRole()}</p>
+                <ul>
+                  <li>${employee.id}</li>
+                  <li>${employee.email}</li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+  `
 }
 
 const managerCard = manager => {
   return `
-  <section>
-    <div class="card">
-    <h3 class="card-title">${manager.name}</h3>
-    <p>${manager.position}</p>
-      <ul>
-        <li>${manager.id}</li>
-        <li>${manager.email}</li>
-        <li>${employee.getOfficeNumber()}<//li> 
-      </ul>
-    </div> 
-  </section>`
+  <section class="row" id="Managers">
+      <div class="col-lg-10">
+        <div class="card border" style="width: 18rem;">
+          <div class="card-body">
+            <h3 class="card-title border-bottom">${manager.name}</h3>
+            <p>${manager.getRole()}</p>
+            <ul>
+              <li>${manager.id}</li>
+              <li>${manager.email}</li>
+              <li>${manager.getOfficeNumber()}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <br>`
 }
 
 const internCard = intern => {
   return `
-        <section>
-          <div class="card">
-          <h3 class="card-title">${intern.name}</h3>
-          <p>${intern.position}</p>
-            <ul>
-              <li>${intern.id}</li>
-              <li>${intern.email}</li>
-              <li>${employee.getSchool()}<//li> 
-            </ul>
-          </div> 
-        </section>`
+  <div class="d-sm-inline-flex" id="Interns">
+  <div class="col-sm-3" id="employee-card">
+    <div class="card border" style="width: 18rem;">
+      <div class="card-body"></div>
+        <h3 class="card-title border-bottom">${intern.name}</h3>
+        <p>${intern.getRole()}</p>
+        <ul>
+          <li>${intern.id}</li>
+          <li>${intern.email}</li>
+          <li>${intern.getSchool()}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+</section>
+        <br>`
 }
 
 const engineerCard = engineer => {
   return `
-              <section>
-                <div class="card">
-                <h3 class="card-title">${engineer.name}</h3>
-                <p>${engineer.position}</p>
-                  <ul>
-                    <li>${engineer.id}</li>
-                    <li>${engineer.email}</li>
-                    <li>${employee.getGitHub()}<//li> 
-                  </ul>
-                </div> 
-              </section>`
+  <section class="col d-sm-inline-flex" id="Engineers">
+  <div class="col-sm-3" id="employee-card">
+    <div class="card border" style="width: 18rem;">
+      <div class="card-body">
+        <h3 class="card-title border-bottom">${engineer.name}</h3>
+        <p>${engineer.getRole()}</p>
+        <ul>
+          <li>${engineer.id}</li>
+          <li>${engineer.email}</li>
+          <li>${engineer.getGitHub()}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <br>`
 }
 
 
 
 
-const generateHtml = team => {
+const generateHtml = employeeArray => {
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -78,14 +101,16 @@ const generateHtml = team => {
 
     <body>
         <header> 
-            <div class="navbar-header"> 
-            <h1>My Team</h1>
-            </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
+        <div class="container-fluid">
+          <h4 class="navbar-brand" href="#">My Team Generator</h4>
+        </div>
+      </nav>
         </header>
 
         <main>
         
-        ${team.map((employee) => {
+        ${employeeArray.map((employee) => {
           switch(employee.getRole()) {
             case 'Manager':
               return managerCard(employee)
@@ -104,9 +129,9 @@ const generateHtml = team => {
       }      
         </main>
     </body>
-    <footer>
-        <h5> created by Ryan Blessing
-        </h5>
+    <footer class="container-fluid navbar-expand-lg bg-dark text-light">
+        <h4> created by Ryan Blessing
+        </h4>
     </footer>
     </html>
     `;
